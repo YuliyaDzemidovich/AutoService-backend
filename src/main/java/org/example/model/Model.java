@@ -37,4 +37,12 @@ public class Model {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 }
