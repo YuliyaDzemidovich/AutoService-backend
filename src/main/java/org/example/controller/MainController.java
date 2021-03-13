@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.example.Main;
-import org.example.dao.BookDao;
 import org.example.dao.OrderDao;
 import org.example.dao.VehicleDao;
 import org.example.model.Vehicle;
@@ -14,13 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
 public class MainController {
     final static Logger log = Logger.getLogger(Main.class);
 
-    @Autowired
-    private BookDao bookDao;
     @Autowired
     private OrderDao orderDao;
     @Autowired
@@ -30,13 +28,6 @@ public class MainController {
     @ResponseBody
     public ResponseEntity<String> hello(){
         return new ResponseEntity<>("Hello spring", HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> getAllBooks() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(bookDao.getBooks());
-        return new ResponseEntity<>(json, HttpStatus.OK);
     }
 
     @GetMapping(path = "/orders", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -58,7 +49,7 @@ public class MainController {
         boolean isCreated = vehicleDao.addVehicle(vehicle);
         log.debug("isCreated: " + isCreated);
         if (isCreated) {
-            return new ResponseEntity<>("", HttpStatus.OK);
+            return new ResponseEntity<>("", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("error: vehicle was not created", HttpStatus.OK);
         }

@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.model.*;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.example.config.AppConfig;
 import org.example.config.HibernateConfig;
@@ -12,12 +11,12 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Properties;
 
 public class Main {
     final static Logger log = Logger.getLogger(Main.class);
@@ -28,16 +27,39 @@ public class Main {
         Class<?>[] configurations = new Class<?>[] {AppConfig.class, HibernateConfig.class};
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(configurations);
 
-        // BookDao bookDao = (BookDao)context.getBean("bookDao");
-
         Main m = new Main();
-        factory = new Configuration().configure().buildSessionFactory();
+        m.init();
+//        factory = new Configuration().configure().buildSessionFactory();
         try {
             m.writedownData();
         } catch (ParseException e) {
             System.out.println("error parsing data string");
         }
 
+    }
+
+    public void init() {
+        Properties props = new Properties();
+        FileInputStream fis = null;
+        Configuration config = null;
+        try {
+            fis = new FileInputStream(Main.class.getClassLoader().getResource("db.properties")
+                    .getPath());
+            props.load(fis);
+            config = new Configuration().configure();
+            config.setProperty("hibernate.connection.username", props.getProperty("MYSQL_DB_USERNAME"));
+            config.setProperty("hibernate.connection.password", props.getProperty("MYSQL_DB_PASSWORD"));
+            config.setProperty("hibernate.connection.url", props.getProperty("MYSQL_DB_URL"));
+            factory = config.buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void writedownData() throws ParseException {

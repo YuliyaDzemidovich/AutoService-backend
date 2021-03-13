@@ -16,7 +16,7 @@ import java.util.Properties;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HibernateTest {
     SessionFactory factory;
-    final static Logger log = Logger.getLogger(Main.class);
+    final static Logger log = Logger.getLogger(HibernateTest.class);
 
     @BeforeAll
     void init() {
@@ -24,7 +24,7 @@ public class HibernateTest {
         FileInputStream fis = null;
         Configuration config = null;
         try {
-            fis = new FileInputStream(DatabaseTest.class.getClassLoader().getResource("db.properties")
+            fis = new FileInputStream(HibernateTest.class.getClassLoader().getResource("db.properties")
                     .getPath());
             props.load(fis);
             config = new Configuration().configure();

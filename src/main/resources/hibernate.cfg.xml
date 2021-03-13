@@ -8,7 +8,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="show_sql">false</property>
         <!-- List of XML mapping files -->
-        <!-- <mapping class="TestObj"/> -->
+        <mapping class="TestObj"/>
         <mapping class="org.example.model.Country"/>
         <mapping class="org.example.model.Brand"/>
         <mapping class="org.example.model.Model"/>
