@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.apache.log4j.Logger;
 import org.example.model.Country;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.*;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CountryDaoTest {
     SessionFactory factory;
     final static Logger log = Logger.getLogger(CountryDaoTest.class);
+    CountryDao countryDao = new CountryDao();
 
     @BeforeAll
     void init() {
@@ -45,10 +47,8 @@ class CountryDaoTest {
 
     @Test
     void getCountry() {
-        CountryDao countryDao = new CountryDao();
-        countryDao.setSessionFactory(factory);
-
-        Country country = countryDao.getCountry("Russia");
+        Session session = factory.openSession();
+        Country country = countryDao.getCountry("Russia", session);
 
         assertAll("Should return Country object retrieved from the database with name 'Russia' and positive id",
                 () -> Assert.notNull(country, "country object fetched from database should not be null"),

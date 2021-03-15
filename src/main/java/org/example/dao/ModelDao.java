@@ -29,13 +29,19 @@ public class ModelDao {
         return model;
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    // for testing purposes
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    /**
+     * Fetch a Model object from the database if found by given Model name<br>
+     * Used as a part of query - uses given Session object<br>
+     * It is assumed that Session object is already initialized
+     * @param modelName Model name attribute
+     * @param session Hibernate session
+     * @return Model object from the database or null if not found
+     */
+    public Model getModel(String modelName, Session session) {
+        Query query = session.createQuery("FROM Model WHERE name = :name");
+        query.setParameter("name", modelName);
+        Model model = (Model)query.getResultList().stream().findFirst().orElse(null);
+        return model;
     }
 
 }

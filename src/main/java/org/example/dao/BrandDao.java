@@ -28,13 +28,19 @@ public class BrandDao {
         return brand;
     }
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    // for testing purposes
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    /**
+     * Fetch a Brand object from the database if found by given Brand name<br>
+     * Used as a part of query - uses given Session object<br>
+     * It is assumed that Session object is already initialized
+     * @param brandName Brand name attribute
+     * @param session Hibernate session
+     * @return Brand object from the database or null if not found
+     */
+    public Brand getBrand(String brandName, Session session) {
+        Query query = session.createQuery("FROM Brand WHERE name = :name");
+        query.setParameter("name", brandName);
+        Brand brand = (Brand)query.getResultList().stream().findFirst().orElse(null);
+        return brand;
     }
 
 }

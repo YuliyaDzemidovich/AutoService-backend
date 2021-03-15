@@ -37,10 +37,7 @@ public class VehicleDao {
             session.beginTransaction();
 
             // check if there's already such Country in the database
-            Query query = session.createQuery("FROM Country WHERE name = :name");
-            query.setParameter("name", vehicle.getModel().getBrand().getCountry().getName());
-            Country countryAlreadyExisting = (Country)query.getResultList().stream().findFirst().orElse(null);
-
+            Country countryAlreadyExisting = countryDao.getCountry(vehicle.getModel().getBrand().getCountry().getName(), session);
             if (countryAlreadyExisting != null) {
                 // attach country to the vehicle
                 vehicle.getModel().getBrand().setCountry(countryAlreadyExisting);
@@ -50,10 +47,7 @@ public class VehicleDao {
             }
 
             // check if there's already such Brand in the database
-            query = session.createQuery("FROM Brand WHERE name = :name");
-            query.setParameter("name", vehicle.getModel().getBrand().getName());
-            Brand brandAlreadyExisting = (Brand)query.getResultList().stream().findFirst().orElse(null);
-
+            Brand brandAlreadyExisting = brandDao.getBrand(vehicle.getModel().getBrand().getName(), session);
             if (brandAlreadyExisting != null) {
                 // attach brand to the vehicle
                 vehicle.getModel().setBrand(brandAlreadyExisting);
@@ -63,10 +57,7 @@ public class VehicleDao {
             }
 
             // check if there's already such Model in the database
-            query = session.createQuery("FROM Model WHERE name = :name");
-            query.setParameter("name", vehicle.getModel().getName());
-            Model modelAlreadyExisting = (Model)query.getResultList().stream().findFirst().orElse(null);
-
+            Model modelAlreadyExisting = modelDao.getModel(vehicle.getModel().getName(), session);
             if (modelAlreadyExisting != null) {
                 // attach model to the vehicle
                 vehicle.setModel(modelAlreadyExisting);

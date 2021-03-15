@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.apache.log4j.Logger;
 import org.example.model.Brand;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.*;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BrandDaoTest {
     SessionFactory factory;
     final static Logger log = Logger.getLogger(CountryDaoTest.class);
+    BrandDao brandDao = new BrandDao();
 
     @BeforeAll
     void init() {
@@ -45,10 +47,8 @@ class BrandDaoTest {
 
     @Test
     void getBrand() {
-        BrandDao brandDao = new BrandDao();
-        brandDao.setSessionFactory(factory);
-
-        Brand brand = brandDao.getBrand("BMW");
+        Session session = factory.openSession();
+        Brand brand = brandDao.getBrand("BMW", session);
 
         assertAll("Should return Brand object retrieved from the database with name 'BMW' and positive id",
                 () -> Assert.notNull(brand, "Brand object fetched from database should not be null"),
