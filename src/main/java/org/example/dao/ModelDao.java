@@ -14,6 +14,7 @@ public class ModelDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    private BrandDao brandDao = new BrandDao();
 
     /**
      * Fetch a Model object from the database if found by given Model name
@@ -44,4 +45,14 @@ public class ModelDao {
         return model;
     }
 
+    public Model getModelByBrand(Model modelData, Session session) {
+        Brand brand = brandDao.getBrandByCountry(modelData.getBrand(), session);
+        if (brand == null) {
+            return null;
+        }
+        Query query = session.createQuery("FROM Model WHERE name = :name AND brand = :brand");
+        query.setParameter("name", modelData.getName());
+        query.setParameter("brand", brand);
+        return (Model)query.getResultList().stream().findFirst().orElse(null);
+    }
 }

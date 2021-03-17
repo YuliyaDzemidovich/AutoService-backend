@@ -13,6 +13,7 @@ public class BrandDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    private CountryDao countryDao = new CountryDao();
 
     /**
      * Fetch a Brand object from the database if found by given Brand name
@@ -39,8 +40,18 @@ public class BrandDao {
     public Brand getBrand(String brandName, Session session) {
         Query query = session.createQuery("FROM Brand WHERE name = :name");
         query.setParameter("name", brandName);
-        Brand brand = (Brand)query.getResultList().stream().findFirst().orElse(null);
-        return brand;
+        return (Brand)query.getResultList().stream().findFirst().orElse(null);
+    }
+
+    public Brand getBrandByCountry(Brand brandData, Session session) {
+        Country country = countryDao.getCountry(brandData.getCountry().getName(), session);
+        if (country == null) {
+            return null;
+        }
+        Query query = session.createQuery("FROM Brand WHERE name = :name AND country = :country");
+        query.setParameter("name", brandData.getName());
+        query.setParameter("country", country);
+        return (Brand)query.getResultList().stream().findFirst().orElse(null);
     }
 
 }

@@ -55,6 +55,19 @@ public class MainController {
         }
     }
 
+    @PutMapping(path = "/vehicles/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> editVehicle(@PathVariable long id, @RequestBody Vehicle vehicle) {
+        log.info("got id: " + id);
+        log.info("Got vehicle country: " + vehicle.getModel().getBrand().getCountry().getName());
+        boolean isEdited = vehicleDao.editVehicle(id, vehicle);
+        log.info("isEdited: " + isEdited);
+        if (isEdited) {
+            return new ResponseEntity<>("", HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("error: vehicle was not edited", HttpStatus.OK);
+        }
+    }
+
     @RequestMapping(path = "/*", produces = {MediaType.TEXT_PLAIN_VALUE})
     @ResponseBody
     public ResponseEntity<String> notFound(){

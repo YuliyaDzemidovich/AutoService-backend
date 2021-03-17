@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.apache.log4j.Logger;
 import org.example.model.Brand;
+import org.example.model.Country;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -57,6 +58,29 @@ class BrandDaoTest {
         );
 
         log.info("Got Brand object with id: " + brand.getId());
+    }
+
+    @Test
+    void getBrandByNameAndCountry() {
+        Brand brandDataHolder = new Brand();
+        brandDataHolder.setName("Ford");
+        Country countryDataHolder = new Country();
+        countryDataHolder.setName("Russia");
+        brandDataHolder.setCountry(countryDataHolder);
+
+        Session session = factory.openSession();
+        Brand brand = brandDao.getBrandByCountry(brandDataHolder, session);
+
+        assertAll("Should return Brand object retrieved from the database with name 'Ford', country 'Russia' and positive id",
+                () -> Assert.notNull(brand, "Brand object fetched from database should not be null"),
+                () -> assertEquals("Ford", brand.getName()),
+                () -> assertEquals("Russia", brand.getCountry().getName()),
+                () -> assertTrue(brand.getId() > 0),
+                () -> assertTrue(brand.getCountry().getId() > 0)
+        );
+
+        log.info("Got Brand object with id: " + brand.getId());
+        log.info("Connected with Country object with id: " + brand.getCountry().getId());
     }
 
     @AfterAll

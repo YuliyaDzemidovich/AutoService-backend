@@ -3,11 +3,15 @@ package org.example.model;
 import javax.persistence.*;
 
 @Entity
+@Table (
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"name", "brand"})
+)
 public class Model {
     @Id
     @GeneratedValue
     private long id;
-    @Column(unique = true)
+    @Column
     private String name;
     @ManyToOne
     @JoinColumn(name = "brand")
