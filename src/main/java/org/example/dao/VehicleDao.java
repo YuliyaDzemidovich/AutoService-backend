@@ -165,6 +165,27 @@ public class VehicleDao {
         return successful;
     }
 
+    public boolean deleteVehicle(long id) {
+        boolean successful = false;
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            Vehicle vehicle = getVehicle(id, session);
+            if (vehicle == null) {
+                return false;
+            }
+            session.delete(vehicle);
+            session.getTransaction().commit();
+            successful = true;
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            log.debug("HibernateException on deleteVehicle()");
+        } finally {
+            session.close();
+        }
+        return successful;
+    }
+
     /**
      * Returns Vehicle object from the database if found by given Id<br>
      * Used as a part of query - uses given Session object<br>
@@ -178,4 +199,5 @@ public class VehicleDao {
         query.setParameter("id", id);
         return (Vehicle)query.getResultList().stream().findFirst().orElse(null);
     }
+
 }

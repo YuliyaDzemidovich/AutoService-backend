@@ -47,7 +47,7 @@ public class MainController {
     @PostMapping(path = "/vehicles", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> createVehicle(@RequestBody Vehicle vehicle) {
         boolean isCreated = vehicleDao.addVehicle(vehicle);
-        log.debug("isCreated: " + isCreated);
+        log.info("isCreated: " + isCreated);
         if (isCreated) {
             return new ResponseEntity<>("", HttpStatus.CREATED);
         } else {
@@ -57,14 +57,24 @@ public class MainController {
 
     @PutMapping(path = "/vehicles/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> editVehicle(@PathVariable long id, @RequestBody Vehicle vehicle) {
-        log.info("got id: " + id);
-        log.info("Got vehicle country: " + vehicle.getModel().getBrand().getCountry().getName());
         boolean isEdited = vehicleDao.editVehicle(id, vehicle);
         log.info("isEdited: " + isEdited);
         if (isEdited) {
             return new ResponseEntity<>("", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("error: vehicle was not edited", HttpStatus.OK);
+        }
+    }
+
+    @DeleteMapping(path = "/vehicles/{id}", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> deleteVehicle(@PathVariable long id) {
+        log.info("got id for delete: " + id);
+        boolean isDeleted = vehicleDao.deleteVehicle(id);
+        log.info("isDeleted: " + isDeleted);
+        if (isDeleted) {
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("error: vehicle was not deleted", HttpStatus.OK);
         }
     }
 
