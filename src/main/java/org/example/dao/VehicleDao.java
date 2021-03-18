@@ -35,35 +35,36 @@ public class VehicleDao {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-
-            // check if there's already such Country in the database
-            Country countryAlreadyExisting = countryDao.getCountry(vehicle.getModel().getBrand().getCountry().getName(), session);
-            if (countryAlreadyExisting != null) {
-                // attach country to the vehicle
-                vehicle.getModel().getBrand().setCountry(countryAlreadyExisting);
-            } else {
-                // or create new Country row in the database
-                session.save(vehicle.getModel().getBrand().getCountry());
-            }
-
-            // check if there's already such Brand in the database
-            Brand brandAlreadyExisting = brandDao.getBrand(vehicle.getModel().getBrand().getName(), session);
-            if (brandAlreadyExisting != null) {
-                // attach brand to the vehicle
-                vehicle.getModel().setBrand(brandAlreadyExisting);
-            } else {
-                // or create new Brand row in the database
-                session.save(vehicle.getModel().getBrand());
-            }
-
-            // check if there's already such Model in the database
-            Model modelAlreadyExisting = modelDao.getModel(vehicle.getModel().getName(), session);
+            // check if there's already such Model in the database (with the same Brand and Country records)
+            Model modelAlreadyExisting = modelDao.getModelByBrand(vehicle.getModel(), session);
             if (modelAlreadyExisting != null) {
-                // attach model to the vehicle
+                // attach Model (and Brand, and Country) to the vehicle
                 vehicle.setModel(modelAlreadyExisting);
-            } else {
-                // or create new Model row in the database
-                session.save(vehicle.getModel());
+            } else { // or new Model will be created
+                Model model = vehicle.getModel();
+                // check if there's already such Brand in the database (with the same Country record)
+                Brand brandAlreadyExisting = brandDao.getBrandByCountry(model.getBrand(), session);
+                if (brandAlreadyExisting != null) {
+                    // attach Brand (and Country) to the new Model
+                    model.setBrand(brandAlreadyExisting);
+                } else { // or new Brand will be created
+                    Brand brand = model.getBrand();
+                    // check if there's already such Country in the database
+                    Country countryAlreadyExisting = countryDao.getCountry(brand.getCountry().getName(), session);
+                    if (countryAlreadyExisting != null) {
+                        // attach Country to the Brand
+                        brand.setCountry(countryAlreadyExisting);
+                    } else { // or new country will be created
+                        Country country = brand.getCountry();
+                        // save it and attach it to the brand
+                        session.save(country);
+                        brand.setCountry(country);
+                    }
+                    session.save(brand);
+                    model.setBrand(brand);
+                }
+                session.save(model);
+                vehicle.setModel(model);
             }
             session.save(vehicle);
             session.getTransaction().commit();
