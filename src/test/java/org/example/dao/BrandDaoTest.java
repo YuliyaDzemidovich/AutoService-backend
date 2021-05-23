@@ -49,7 +49,7 @@ class BrandDaoTest {
     @Test
     void getBrand() {
         Session session = factory.openSession();
-        Brand brand = brandDao.getBrand("BMW", session);
+        Brand brand = brandDao.getBrand("BMW");
 
         assertAll("Should return Brand object retrieved from the database with name 'BMW' and positive id",
                 () -> Assert.notNull(brand, "Brand object fetched from database should not be null"),

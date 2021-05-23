@@ -48,7 +48,7 @@ class CountryDaoTest {
     @Test
     void getCountry() {
         Session session = factory.openSession();
-        Country country = countryDao.getCountry("Russia", session);
+        Country country = countryDao.getCountry("Russia");
 
         assertAll("Should return Country object retrieved from the database with name 'Russia' and positive id",
                 () -> Assert.notNull(country, "country object fetched from database should not be null"),

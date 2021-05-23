@@ -52,7 +52,7 @@ class ModelDaoTest {
     @Test
     void getModel() {
         Session session = factory.openSession();
-        Model model = modelDao.getModel("X5", session);
+        Model model = modelDao.getModel("X5");
 
         assertAll("Should return Model object retrieved from the database with name 'X5' and positive id",
                 () -> Assert.notNull(model, "Model object fetched from database should not be null"),

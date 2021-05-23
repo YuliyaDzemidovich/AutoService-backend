@@ -30,10 +30,10 @@ public class Order {
     private int totalSum;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "fault")
     private List<Fault> faults;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "work")
     private List<Work> works;
 

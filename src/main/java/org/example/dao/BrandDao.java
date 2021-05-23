@@ -7,7 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class BrandDao {
     final static Logger log = Logger.getLogger(BrandDao.class);
 
@@ -20,31 +23,16 @@ public class BrandDao {
      * @param brandName Brand name attribute
      * @return Brand object from the database or null if not found
      */
+    @Transactional
     public Brand getBrand(String brandName) {
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("FROM Brand WHERE name = :name");
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM Brand WHERE name = :name");
         query.setParameter("name", brandName);
         Brand brand = (Brand)query.getResultList().stream().findFirst().orElse(null);
-        session.close();
         return brand;
     }
 
-    /**
-     * Fetch a Brand object from the database if found by given Brand name<br>
-     * Used as a part of query - uses given Session object<br>
-     * It is assumed that Session object is already initialized
-     * @param brandName Brand name attribute
-     * @param session Hibernate session
-     * @return Brand object from the database or null if not found
-     */
-    public Brand getBrand(String brandName, Session session) {
-        Query query = session.createQuery("FROM Brand WHERE name = :name");
-        query.setParameter("name", brandName);
-        return (Brand)query.getResultList().stream().findFirst().orElse(null);
-    }
-
     public Brand getBrandByCountry(Brand brandData, Session session) {
-        Country country = countryDao.getCountry(brandData.getCountry().getName(), session);
+        Country country = countryDao.getCountry(brandData.getCountry().getName());
         if (country == null) {
             return null;
         }

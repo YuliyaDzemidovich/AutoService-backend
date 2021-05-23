@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Each fault has status set, depending whether it was found during diagnostics or claimed initially by client,
  * whether it needs to be fixed or not (client may refuse fixing it), whether it was fixed or not. There is
  * also fault status, when the fault was claimed by client, but wasn't found.
- * @see model.FaultStatus
+ * @see org.example.model.FaultStatus
  */
 @Entity
 public class Fault {
