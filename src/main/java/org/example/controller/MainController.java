@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.example.Main;
+import org.example.dao.ClientDao;
 import org.example.dao.OrderDao;
 import org.example.dao.VehicleDao;
 import org.example.model.Vehicle;
@@ -22,11 +23,20 @@ public class MainController {
     private OrderDao orderDao;
     @Autowired
     private VehicleDao vehicleDao;
+    @Autowired
+    private ClientDao clientDao;
 
     @RequestMapping(path = "/hello", produces = {MediaType.TEXT_PLAIN_VALUE})
     @ResponseBody
     public ResponseEntity<String> hello(){
         return new ResponseEntity<>("Hello spring", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/clients", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> getAllClients() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(clientDao.getAllClients());
+        return new ResponseEntity<>(json, HttpStatus.OK);
     }
 
     @GetMapping(path = "/orders", produces = {MediaType.APPLICATION_JSON_VALUE})
