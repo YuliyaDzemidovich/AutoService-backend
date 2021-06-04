@@ -44,6 +44,7 @@ public class HibernateTest {
     }
 
     @Test
+    @Disabled
     public void testHibernateConn() {
         Session session = factory.openSession();
         Transaction tx = null;

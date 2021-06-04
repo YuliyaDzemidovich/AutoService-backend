@@ -47,8 +47,9 @@ class BrandDaoTest {
     }
 
     @Test
+    @Disabled
     void getBrand() {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Brand brand = brandDao.getBrand("BMW");
 
         assertAll("Should return Brand object retrieved from the database with name 'BMW' and positive id",
@@ -61,6 +62,7 @@ class BrandDaoTest {
     }
 
     @Test
+    @Disabled
     void getBrandByNameAndCountry() {
         Brand brandDataHolder = new Brand();
         brandDataHolder.setName("Ford");
@@ -68,7 +70,7 @@ class BrandDaoTest {
         countryDataHolder.setName("Russia");
         brandDataHolder.setCountry(countryDataHolder);
 
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Brand brand = brandDao.getBrandByCountry(brandDataHolder, session);
 
         assertAll("Should return Brand object retrieved from the database with name 'Ford', country 'Russia' and positive id",

@@ -46,6 +46,7 @@ class CountryDaoTest {
     }
 
     @Test
+    @Disabled
     void getCountry() {
         Session session = factory.openSession();
         Country country = countryDao.getCountry("Russia");

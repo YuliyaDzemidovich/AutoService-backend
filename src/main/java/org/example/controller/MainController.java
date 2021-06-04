@@ -29,7 +29,7 @@ public class MainController {
     @RequestMapping(path = "/hello", produces = {MediaType.TEXT_PLAIN_VALUE})
     @ResponseBody
     public ResponseEntity<String> hello(){
-        return new ResponseEntity<>("Hello spring", HttpStatus.OK);
+        return new ResponseEntity<>("hello spring", HttpStatus.OK);
     }
 
     @GetMapping(path = "/clients", produces = {MediaType.APPLICATION_JSON_VALUE})

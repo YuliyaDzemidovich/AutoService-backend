@@ -6,10 +6,7 @@ import org.example.model.Model;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.util.Assert;
 
 import java.io.FileInputStream;
@@ -50,6 +47,7 @@ class ModelDaoTest {
     }
 
     @Test
+    @Disabled
     void getModel() {
         Session session = factory.openSession();
         Model model = modelDao.getModel("X5");
