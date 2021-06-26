@@ -14,12 +14,6 @@
                 org.springframework.web.context.support.AnnotationConfigWebApplicationContext
             </param-value>
         </init-param>
-        <!-- Again, config locations must consist of one or more comma- or space-delimited
-            and fully-qualified @Configuration classes -->
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>org.example.config.WebConfig</param-value>
-        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
+@RequestMapping("/")
 public class MainController {
     final static Logger log = Logger.getLogger(Main.class);
 
@@ -29,7 +30,7 @@ public class MainController {
     @RequestMapping(path = "/hello", produces = {MediaType.TEXT_PLAIN_VALUE})
     @ResponseBody
     public ResponseEntity<String> hello(){
-        return new ResponseEntity<>("hello spring", HttpStatus.OK);
+        return new ResponseEntity<>("hello spring boot!", HttpStatus.OK);
     }
 
     @GetMapping(path = "/clients", produces = {MediaType.APPLICATION_JSON_VALUE})

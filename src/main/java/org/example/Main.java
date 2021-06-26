@@ -1,15 +1,14 @@
 package org.example;
 
-import org.example.model.*;
-
 import org.apache.log4j.Logger;
-import org.example.config.AppConfig;
-import org.example.config.HibernateConfig;
+import org.example.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,23 +17,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
+@SpringBootApplication(exclude= HibernateJpaAutoConfiguration.class)
 public class Main {
     final static Logger log = Logger.getLogger(Main.class);
 
     static SessionFactory factory;
 
     public static void main(String[] args) throws IOException {
-        Class<?>[] configurations = new Class<?>[] {AppConfig.class, HibernateConfig.class};
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(configurations);
+        SpringApplication.run(Main.class, args);
 
-        Main m = new Main();
-        m.init();
-//        factory = new Configuration().configure().buildSessionFactory();
-        try {
-            m.writedownData();
-        } catch (ParseException e) {
-            System.out.println("error parsing data string");
-        }
+//        Class<?>[] configurations = new Class<?>[] {AppConfig.class, HibernateConfig.class};
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(configurations);
+//
+//        Main m = new Main();
+//        m.init();
+//        try {
+//            m.writedownData();
+//        } catch (ParseException e) {
+//            System.out.println("error parsing data string");
+//        }
 
     }
 
