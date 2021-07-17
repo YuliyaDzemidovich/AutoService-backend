@@ -1,6 +1,7 @@
 package org.example;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @SpringBootApplication(exclude= HibernateJpaAutoConfiguration.class)
 public class Main {
-    final static Logger log = Logger.getLogger(Main.class);
+    final static Logger log = LogManager.getLogger(Main.class);
 
     static SessionFactory factory;
 

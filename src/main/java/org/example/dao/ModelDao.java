@@ -1,6 +1,7 @@
 package org.example.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.model.Brand;
 import org.example.model.Model;
 import org.hibernate.Session;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ModelDao {
-    final static Logger log = Logger.getLogger(ModelDao.class);
+    final static Logger log = LogManager.getLogger(ModelDao.class);
 
     @Autowired
     private SessionFactory sessionFactory;

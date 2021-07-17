@@ -1,6 +1,7 @@
 package org.example.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.model.Country;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CountryDaoTest {
     SessionFactory factory;
-    final static Logger log = Logger.getLogger(CountryDaoTest.class);
+    final static Logger log = LogManager.getLogger(CountryDaoTest.class);
     CountryDao countryDao = new CountryDao();
 
     @BeforeAll

@@ -2,7 +2,8 @@ package org.example.controller;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.io.ByteArrayOutputStream;
 @RequestMapping("/report")
 public class PdfController {
 
-    final static Logger log = Logger.getLogger(PdfController.class);
+    final static Logger log = LogManager.getLogger(PdfController.class);
 
     @GetMapping(path = "/{orderId}",  headers="Accept=*/*", produces = {MediaType.APPLICATION_PDF_VALUE})
     public ResponseEntity<byte[]> getPdfReport(@PathVariable long orderId){

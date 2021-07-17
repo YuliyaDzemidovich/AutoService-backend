@@ -1,5 +1,6 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.Main;
-import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +17,7 @@ import java.util.Properties;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HibernateTest {
     SessionFactory factory;
-    final static Logger log = Logger.getLogger(HibernateTest.class);
+    final static Logger log = LogManager.getLogger(HibernateTest.class);
 
     @BeforeAll
     void init() {

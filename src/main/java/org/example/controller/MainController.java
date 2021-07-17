@@ -2,7 +2,8 @@ package org.example.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.Main;
 import org.example.dao.ClientDao;
 import org.example.dao.OrderDao;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/")
 public class MainController {
-    final static Logger log = Logger.getLogger(Main.class);
+    final static Logger log = LogManager.getLogger(Main.class);
 
     @Autowired
     private OrderDao orderDao;

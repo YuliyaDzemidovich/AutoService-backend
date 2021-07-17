@@ -1,6 +1,7 @@
 package org.example.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.Main;
 import org.example.model.Brand;
 import org.example.model.Country;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 public class VehicleDao {
-    final static Logger log = Logger.getLogger(Main.class);
+    final static Logger log = LogManager.getLogger(Main.class);
 
     @Autowired
     private SessionFactory sessionFactory;
