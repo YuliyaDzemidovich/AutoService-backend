@@ -16,6 +16,8 @@
     <description>Autoservice</description>
     <properties>
         <java.version>11</java.version>
+        <log4j.version>2.17.0</log4j.version>
+        <bouncycastle.version>1.70</bouncycastle.version>
     </properties>
     <dependencies>
         <dependency>
@@ -82,12 +84,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.17.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
@@ -115,7 +117,7 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.56</version>
+            <version>${bouncycastle.version}</version>
         </dependency>
         <!-- For BasicDataSource import in Hibernate config -->
         <dependency>
