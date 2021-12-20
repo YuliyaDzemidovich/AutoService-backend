@@ -8,3 +8,5 @@
 /httpRequests/
 # idea files
 /.idea/
+/.name
+/target/
